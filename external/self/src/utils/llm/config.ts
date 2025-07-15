@@ -1,0 +1,1 @@
+export const model = "qwen2.5"

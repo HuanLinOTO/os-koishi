@@ -1,0 +1,32 @@
+{
+  "name": "koishi-plugin-self",
+  "description": "self",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "chatbot",
+    "koishi",
+    "plugin"
+  ],
+  "peerDependencies": {
+    "koishi": "^4.18.8"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "chromadb": "^1.10.5",
+    "chromadb-default-embed": "^2.14.0",
+    "ollama": "^0.5.16",
+    "uuid": "^11.1.0",
+    "uuid4": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/uuid4": "^2",
+    "less": "^4.3.0"
+  }
+}
