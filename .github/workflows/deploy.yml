@@ -1,0 +1,53 @@
+name: Node.js Build and SSH Deploy
+
+on:
+  push:
+    branches: ["main", "master"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Prepare the project
+        run: |
+          ls -la
+          rm -rf .git
+
+      - name: Upload project to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "./*"
+          target: "/root/koishi-app"
+
+      - name: Deploy and start application
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            export PATH="/root/.nvm/versions/node/v22.17.0/bin/:$PATH"
+            cd /root/koishi-app
+
+            yarn
+
+            # 检查并关闭已存在的tmux会话
+            tmux has-session -t koishi 2>/dev/null && tmux kill-session -t koishi || true
+
+            # 创建新的tmux会话并启动应用
+            tmux new-session -d -s koishi 'export PATH="/root/.nvm/versions/node/v22.17.0/bin/:$PATH" && cd /root/koishi-app && yarn start'
+
+            echo "Application deployed and started in tmux session 'koishi'"

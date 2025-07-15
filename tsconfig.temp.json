@@ -1,0 +1,23 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./external/zssm"
+    },
+    {
+      "path": "./external/self"
+    },
+    {
+      "path": "./external/rubii"
+    },
+    {
+      "path": "./external/one-last-kick"
+    },
+    {
+      "path": "./external/fish-audio-online"
+    },
+    {
+      "path": "./external/adapter-onebot"
+    }
+  ]
+}
