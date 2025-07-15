@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            export PATH="/root/.nvm/versions/node/v22.17.0/bin/:$PATH"
+            export PATH="/root/.local/share/fnm/node-versions/v22.14.0/installation/bin:$PATH"
             cd /root/koishi-app
 
             yarn
@@ -48,6 +48,6 @@ jobs:
             tmux has-session -t koishi 2>/dev/null && tmux kill-session -t koishi || true
 
             # 创建新的tmux会话并启动应用
-            tmux new-session -d -s koishi 'export PATH="/root/.nvm/versions/node/v22.17.0/bin/:$PATH" && cd /root/koishi-app && yarn start'
+            tmux new-session -d -s koishi 'export PATH="/root/.local/share/fnm/node-versions/v22.14.0/installation/bin:$PATH" && cd /root/koishi-app && yarn start'
 
             echo "Application deployed and started in tmux session 'koishi'"
