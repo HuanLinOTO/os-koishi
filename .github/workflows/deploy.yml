@@ -27,8 +27,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "./*"
-          target: "/root/koishi-app"
+          source: "./external/*"
+          target: "/root/koishi-app/external"
 
       - name: Deploy and start application
         if: ${{ github.event_name != 'pull_request' }}
